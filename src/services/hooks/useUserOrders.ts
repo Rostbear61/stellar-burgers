@@ -1,6 +1,6 @@
 // hooks/useUserOrders.ts
 import { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector } from '../store';
 import {
   fetchUserOrders,
   selectUserOrders,
@@ -12,7 +12,7 @@ import { RootState } from '../store';
 import type { AppDispatch } from '../store';
 
 export const useUserOrders = () => {
-  const dispatch = useDispatch<AppDispatch>();
+  const dispatch = useDispatch();
 
   const orders = useSelector(selectUserOrders);
   const isLoading = useSelector(selectOrdersLoading);

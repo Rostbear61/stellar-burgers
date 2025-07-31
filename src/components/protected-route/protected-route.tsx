@@ -1,7 +1,6 @@
-import { useSelector } from 'react-redux';
 import { Navigate, useLocation } from 'react-router-dom';
 import { Preloader } from '@ui';
-import { RootState } from '../../services/store';
+import { RootState, useSelector } from '../../services/store';
 type ProtectedRouteProps = {
   onlyUnAuth?: boolean;
   children: React.ReactNode;

@@ -2,8 +2,7 @@ import { Preloader } from '@ui';
 import { FeedUI } from '@ui-pages';
 import { TOrder } from '@utils-types';
 import { FC, useEffect } from 'react';
-import { useSelector } from 'react-redux';
-import { RootState } from '../../services/store';
+import { RootState, useSelector } from '../../services/store';
 import { fetchFeeds } from '../../services/slices/feed';
 import { useAppDispatch } from '../../services/hooks/useAppDispatch';
 

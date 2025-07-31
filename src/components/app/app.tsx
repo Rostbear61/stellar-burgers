@@ -13,7 +13,7 @@ import { IngredientDetails, Modal, OrderInfo } from '@components';
 import '../../index.css';
 import styles from './app.module.css';
 import { useEffect } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch } from '../../services/store';
 import { fetchIngredients } from '../../services/slices/ingredients';
 import { fetchFeeds } from '../../services/slices/feed';
 import { AppHeader } from '@components';

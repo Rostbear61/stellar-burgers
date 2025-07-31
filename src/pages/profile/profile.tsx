@@ -1,7 +1,6 @@
 import { ProfileUI } from '@ui-pages';
 import { FC, SyntheticEvent, useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
-import { RootState } from '../../services/store';
+import { RootState, useSelector } from '../../services/store';
 import { useAppDispatch } from '../../services/hooks/useAppDispatch';
 import { TRegisterData } from '../../utils/burger-api';
 import { updateProfile } from '../../services/slices/user';

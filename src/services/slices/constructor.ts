@@ -1,8 +1,13 @@
 import { TIngredient } from '../../utils/types';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { v4 as uuidv4 } from 'uuid';
+
+export type TConstructorIngredient = TIngredient & {
+  id: string;
+};
 
 export interface TConstructorState {
-  ingredients: TIngredient[] | null;
+  ingredients: TConstructorIngredient[] | null;
 }
 
 const initialState: TConstructorState = {
@@ -13,31 +18,41 @@ const constructorSlice = createSlice({
   name: 'constructor',
   initialState,
   reducers: {
-    addIngredient(state, action: PayloadAction<TIngredient>) {
-      const newIngredient = action.payload;
-      const currentIngredients = state.ingredients ?? [];
+    addIngredient: {
+      reducer(state, action: PayloadAction<TConstructorIngredient>) {
+        const newIngredient = action.payload;
+        const currentIngredients = state.ingredients ?? [];
 
-      if (newIngredient.type === 'bun') {
-        const otherIngredients = currentIngredients.filter(
-          (ing) => ing.type !== 'bun'
-        );
+        if (newIngredient.type === 'bun') {
+          const otherIngredients = currentIngredients.filter(
+            (ing) => ing.type !== 'bun'
+          );
+          return {
+            ...state,
+            ingredients: [...otherIngredients, newIngredient]
+          };
+        }
+
         return {
           ...state,
-          ingredients: [...otherIngredients, newIngredient]
+          ingredients: [...currentIngredients, newIngredient]
+        };
+      },
+      prepare(ingredient: TIngredient) {
+        return {
+          payload: {
+            ...ingredient,
+            id: uuidv4() // Генерируем id здесь
+          }
         };
       }
-
-      return {
-        ...state,
-        ingredients: [...currentIngredients, newIngredient]
-      };
     },
 
     removeIngredient(state, action: PayloadAction<string>) {
       if (!state.ingredients) return;
 
       const newIngredients = state.ingredients.filter(
-        (ing) => ing._id !== action.payload
+        (ing) => ing.id !== action.payload // Используем id для фильтрации
       );
       return {
         ...state,
@@ -52,7 +67,7 @@ const constructorSlice = createSlice({
       if (!state.ingredients) return;
 
       const { id, direction } = action.payload;
-      const index = state.ingredients.findIndex((ing) => ing._id === id);
+      const index = state.ingredients.findIndex((ing) => ing.id === id); // Используем id для поиска
 
       if (index === -1) return;
       if (direction === 'up' && index === 0) return;

@@ -1,7 +1,6 @@
 import { FC, useMemo } from 'react';
 import { BurgerConstructorUI } from '@ui';
-import { useSelector } from 'react-redux';
-import { RootState } from '../../services/store';
+import { RootState, useSelector } from '../../services/store';
 import { TIngredient } from '@utils-types';
 import { useAppDispatch } from '../../services/hooks/useAppDispatch';
 import { createOrder } from '../../services/slices/order';
@@ -14,7 +13,7 @@ import {
 } from '../../services/slices/order';
 import { useCallback } from 'react';
 import { clearIngredients } from '../../services/slices/constructor';
-
+import { getOrderByNumberApi } from '../../utils/burger-api';
 export const BurgerConstructor: FC = () => {
   const items = useSelector(
     (state: RootState) => state.constructor.ingredients
@@ -83,8 +82,17 @@ export const BurgerConstructor: FC = () => {
       .unwrap()
       .then((result) => {
         if (result.success) {
-          dispatch(setOrderModalData(result.order));
-          dispatch(clearIngredients());
+          return getOrderByNumberApi(result.order.number).then(
+            (fullOrderResponse) => {
+              if (
+                fullOrderResponse.success &&
+                fullOrderResponse.orders.length > 0
+              ) {
+                dispatch(setOrderModalData(fullOrderResponse.orders[0]));
+                dispatch(clearIngredients());
+              }
+            }
+          );
         }
       })
       .catch((error) => {

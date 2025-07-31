@@ -1,7 +1,6 @@
 import { FC, SyntheticEvent, useState } from 'react';
 import { RegisterUI } from '@ui-pages';
-import { RootState } from '../../services/store';
-import { useSelector } from 'react-redux';
+import { RootState, useSelector } from '../../services/store';
 import { register } from '../../services/slices/user';
 import { useAppDispatch } from '../../services/hooks/useAppDispatch';
 
