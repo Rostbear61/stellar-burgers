@@ -10,7 +10,7 @@ import { TOrder } from '../../utils/types';
 import { RootState } from '../store';
 import { PayloadAction } from '@reduxjs/toolkit';
 
-interface OrdersState {
+export interface OrdersState {
   userOrders: TOrder[];
   currentOrder: TOrder | null;
   feed: {

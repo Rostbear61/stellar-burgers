@@ -15,7 +15,7 @@
     "isolatedModules": true,
     "noEmit": false,
     "jsx": "react-jsx",
-    "types": ["node", "jest"],
+    "types": ["node", "jest", "cypress"],
     "baseUrl": ".",
     "paths": {
       "@pages": ["src/pages"],
@@ -28,5 +28,18 @@
       "@selectors": ["src/services/selectors"]
     }
   },
-  "include": ["src"]
+  "include": [
+    "src",
+    "__tests__/order.test.ts",
+    "__tests__/ingredients.test.ts",
+    "__tests__/feed.test.ts",
+    "__tests__/constructor.test.ts",
+    "cypress/e2e/constructor.cy.tsx",
+    "__tests__/user.test.ts",
+    "__tests__/store.test.ts",
+    "cypress/**/*.ts",
+    "cypress/**/*.tsx",
+    "cypress",
+    "tests"
+  ]
 }
