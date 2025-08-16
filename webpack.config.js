@@ -13,11 +13,26 @@ module.exports = {
         use: ['babel-loader']
       },
       {
-        test: /\.(ts)x?$/,
-        exclude: /node_modules/,
-        use: {
-          loader: 'ts-loader'
-        }
+        test: /\.(ts|tsx)$/,
+        exclude: [/node_modules/, /cypress/],
+        use: [
+          {
+            loader: 'babel-loader',
+            options: {
+              presets: [
+                '@babel/preset-env',
+                '@babel/preset-react',
+                '@babel/preset-typescript'
+              ]
+            }
+          },
+          {
+            loader: 'ts-loader',
+            options: {
+              transpileOnly: true // для ускорения сборки
+            }
+          }
+        ]
       },
       {
         test: /\.css$/,
@@ -49,7 +64,8 @@ module.exports = {
   },
   plugins: [
     new ESLintPlugin({
-      extensions: ['.js', '.jsx', '.ts', '.tsx']
+      extensions: ['.js', '.jsx', '.ts', '.tsx'],
+      exclude: ['node_modules', 'cypress']
     }),
     new HtmlWebpackPlugin({
       template: './public/index.html'
@@ -83,12 +99,14 @@ module.exports = {
   },
   output: {
     path: path.resolve(__dirname, './dist'),
-    filename: 'bundle.js'
+    filename: 'bundle.js',
+    publicPath: '/' // важно для правильной работы react-router
   },
   devServer: {
     static: path.join(__dirname, './dist'),
     compress: true,
     historyApiFallback: true,
-    port: 4000
+    port: 4000,
+    hot: true // добавлено для горячей перезагрузки
   }
 };

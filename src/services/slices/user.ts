@@ -13,7 +13,7 @@ import { RootState } from '../store';
 import { deleteCookie, getCookie, setCookie } from '../../utils/cookie';
 import { TRegisterData, TLoginData } from '../../utils/burger-api';
 
-interface UserState {
+export interface UserState {
   user: TUser | null;
   isAuthChecked: boolean;
   error?: string | null;
@@ -22,7 +22,7 @@ interface UserState {
   passwordResetSuccess: boolean;
 }
 
-const initialState: UserState = {
+export const initialState: UserState = {
   user: null,
   isAuthChecked: false,
   error: null,
@@ -297,4 +297,4 @@ export const getUser = (state: RootState): TUser | null =>
   state.user?.user ?? null;
 export const getIsAuthChecked = (state: RootState): boolean =>
   state.user.isAuthChecked;
-export const { resetError } = userSlice.actions;
+export const { resetError, resetPasswordResetState } = userSlice.actions;

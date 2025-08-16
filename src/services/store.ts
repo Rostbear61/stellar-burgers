@@ -1,4 +1,9 @@
-import { configureStore, ThunkAction, Action } from '@reduxjs/toolkit';
+import {
+  configureStore,
+  ThunkAction,
+  Action,
+  combineReducers
+} from '@reduxjs/toolkit';
 import {
   TypedUseSelectorHook,
   useDispatch as dispatchHook,
@@ -9,13 +14,13 @@ import { ingredientsReducer } from './slices/ingredients';
 import { feedReducer } from './slices/feed';
 import { constructorReducer } from './slices/constructor';
 import { orderReducer } from './slices/order';
-const rootReducer = {
+export const rootReducer = combineReducers({
   user: userReducer,
   ingredients: ingredientsReducer,
   feed: feedReducer,
   constructor: constructorReducer,
   order: orderReducer
-};
+});
 
 const store = configureStore({
   reducer: rootReducer,
